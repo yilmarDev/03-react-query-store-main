@@ -9,7 +9,7 @@ export const CompleteListPage = () => {
 
       {isLoading && 'Loading ...'}
 
-      <ProductList products={products} />
+      <ProductList productsList={products} />
     </div>
   );
 };

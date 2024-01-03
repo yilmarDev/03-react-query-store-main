@@ -5,6 +5,7 @@ interface Props {
 }
 
 export const getProducts = async ({ filterKey }: Props) => {
-  const { data } = await productsApi.get<Product[]>('/products');
+  const urlFilter = filterKey ? `?category=${filterKey}` : '';
+  const { data } = await productsApi.get<Product[]>(`/products${urlFilter}`);
   return data;
 };

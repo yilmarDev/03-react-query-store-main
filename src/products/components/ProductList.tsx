@@ -1,25 +1,15 @@
-import { ProductCard } from ".."
+import { Product, ProductCard } from '..';
 
-export const ProductList = () => {
+interface Props {
+  productsList: Product[];
+}
+
+export const ProductList = ({ productsList }: Props) => {
   return (
     <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 justify-center max-w-max">
-
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-
+      {productsList.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
     </div>
-  )
-}
+  );
+};
