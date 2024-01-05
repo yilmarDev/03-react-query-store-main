@@ -13,7 +13,7 @@ export const useProduct = ({ id }: Props) => {
     data: product,
     isFetching,
   } = useQuery({
-    queryFn: () => productActions.getProductById({ id }),
+    queryFn: () => productActions.getProductById(id),
     queryKey: ['product', { id }],
     staleTime: 1000 * 60 * 60,
   });
