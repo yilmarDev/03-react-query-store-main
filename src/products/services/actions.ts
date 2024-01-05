@@ -4,9 +4,6 @@ interface ProductsOptions {
   filterKey?: string;
 }
 
-interface ProductOptions {
-  id: number;
-}
 export const getProducts = async ({
   filterKey,
 }: ProductsOptions): Promise<Product[]> => {
@@ -15,9 +12,7 @@ export const getProducts = async ({
   return data;
 };
 
-export const getProductById = async ({
-  id,
-}: ProductOptions): Promise<Product> => {
+export const getProductById = async (id: number): Promise<Product> => {
   // const urlFilter = filterKey ? `?category=${filterKey}` : '';
   const { data } = await productsApi.get<Product>(`/products/${id}`);
   return data;
