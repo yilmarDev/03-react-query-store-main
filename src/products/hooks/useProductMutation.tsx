@@ -9,9 +9,17 @@ export const useProductMutation = () => {
     onSuccess: (data: Product) => {
       console.log('Producto creado');
 
-      queryClient.invalidateQueries({
-        queryKey: ['products', { filterKey: data.category }],
-      });
+      //   queryClient.invalidateQueries({
+      //     queryKey: ['products', { filterKey: data.category }],
+      //   });
+
+      queryClient.setQueryData(
+        ['products', { filterKey: data.category }],
+        (old: Product[]) => {
+          if (!old) return [];
+          return [...old, data];
+        }
+      );
     },
   });
 
