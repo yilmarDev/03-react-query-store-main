@@ -1,7 +1,6 @@
 import { Button, Image, Input, Textarea } from '@nextui-org/react';
-import { useMutation } from '@tanstack/react-query';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { productActions } from '..';
+import { useProductMutation } from '..';
 
 interface FormInputs {
   title: string;
@@ -12,12 +11,7 @@ interface FormInputs {
 }
 
 export const NewProduct = () => {
-  const productMutation = useMutation({
-    mutationFn: productActions.createProduct,
-    onSuccess: () => {
-      console.log('Producto creado');
-    },
-  });
+  const productMutation = useProductMutation();
 
   const { control, handleSubmit, watch } = useForm<FormInputs>({
     defaultValues: {
@@ -80,7 +74,7 @@ export const NewProduct = () => {
                 <Input
                   className="mt-2"
                   type="url"
-                  label="Url del producto"
+                  label="Url de la imagen del producto"
                   value={field.value}
                   onChange={field.onChange}
                 />

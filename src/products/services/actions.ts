@@ -12,7 +12,7 @@ export interface ProductLike {
   image: string;
 }
 
-const sleep = (seconds: number): Promise<boolean> => {
+export const sleep = (seconds: number): Promise<boolean> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(true);
@@ -34,7 +34,7 @@ export const getProductById = async (id: number): Promise<Product> => {
 };
 
 export const createProduct = async (product: ProductLike) => {
-  await sleep(2);
+  // await sleep(2);
 
   const { data } = await productsApi.post(`/products`, product);
   return data;
