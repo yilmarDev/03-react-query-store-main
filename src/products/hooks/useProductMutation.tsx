@@ -21,6 +21,7 @@ export const useProductMutation = () => {
 
       return { optimisticProduct };
     },
+
     onSuccess: (product, variables, context) => {
       //   queryClient.invalidateQueries({
       //     queryKey: ['products', { filterKey: data.category }],
@@ -34,12 +35,32 @@ export const useProductMutation = () => {
       queryClient.setQueryData(
         ['products', { filterKey: product.category }],
         (old: Product[]) => {
-          if (!old) return [];
+          if (!old) return [product];
 
           return old.map((cacheProduct) => {
             return cacheProduct.id === context?.optimisticProduct.id
               ? product
               : cacheProduct;
+          });
+        }
+      );
+    },
+
+    onError: (error, variables, context) => {
+      console.log({ error, variables, context });
+
+      queryClient.removeQueries({
+        queryKey: ['product', context?.optimisticProduct.id],
+        exact: false,
+      });
+
+      queryClient.setQueryData(
+        ['products', { filterKey: variables.category }],
+        (old: Product[]) => {
+          if (!old) return [];
+
+          return old.filter((cacheProduct) => {
+            return cacheProduct.id !== context?.optimisticProduct.id;
           });
         }
       );

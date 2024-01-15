@@ -35,6 +35,7 @@ export const getProductById = async (id: number): Promise<Product> => {
 
 export const createProduct = async (product: ProductLike) => {
   await sleep(5);
+  throw new Error('The product cannot be created');
 
   const { data } = await productsApi.post(`/products`, product);
   return data;
