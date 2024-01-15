@@ -18,19 +18,29 @@ export const useProductMutation = () => {
           return [...old, optimisticProduct];
         }
       );
-    },
-    onSuccess: (data: Product) => {
-      console.log('Producto creado');
 
+      return { optimisticProduct };
+    },
+    onSuccess: (product, variables, context) => {
       //   queryClient.invalidateQueries({
       //     queryKey: ['products', { filterKey: data.category }],
       //   });
 
+      queryClient.removeQueries({
+        queryKey: ['product', context?.optimisticProduct.id],
+        exact: false,
+      });
+
       queryClient.setQueryData(
-        ['products', { filterKey: data.category }],
+        ['products', { filterKey: product.category }],
         (old: Product[]) => {
           if (!old) return [];
-          return [...old, data];
+
+          return old.map((cacheProduct) => {
+            return cacheProduct.id === context?.optimisticProduct.id
+              ? product
+              : cacheProduct;
+          });
         }
       );
     },
